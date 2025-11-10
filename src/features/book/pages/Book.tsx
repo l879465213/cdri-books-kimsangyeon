@@ -104,6 +104,7 @@ export const Book = () => {
       {/* 검색 인풋 */}
       <div className="mt-[16px] flex flex-row gap-[16px] items-center relative">
         <SearchInput
+          key={searchValue}
           className="w-[480px]"
           placeholder="검색어를 입력하세요"
           onSearch={handleSearch}
