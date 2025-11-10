@@ -36,7 +36,7 @@ export const Book = () => {
         keyword: searchParams.get("keyword")!,
         page: String(pageParam),
         size: "10",
-        target: searchParams.get("target") as "title" | "publisher" | "author" | undefined,
+        target: searchParams.get("target") as "title" | "publisher" | "person" | undefined,
       }),
     enabled: !!searchParams.get("keyword"),
     getNextPageParam: (lastPage, allPages) => {
@@ -80,6 +80,7 @@ export const Book = () => {
     setSearchValue(value);
     const newParams = new URLSearchParams(searchParams);
     newParams.set("keyword", value);
+    newParams.set("target", "title");
     newParams.delete("page"); // 검색 시 페이지 초기화
     setSearchParams(newParams);
   };

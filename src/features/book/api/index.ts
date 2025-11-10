@@ -12,7 +12,7 @@ const getBookListFn = async ({
   keyword: string;
   page?: string;
   size?: string;
-  target?: "title" | "publisher" | "author";
+  target?: "title" | "publisher" | "person";
 }): Promise<ApiResponse<BookResponse[]>> => {
   const url = `${BOOK_URL}`;
 

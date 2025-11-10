@@ -1,5 +1,6 @@
 import type { QueryParam } from "@/shared/types";
 import { useRef, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 type AdvancedSearchModalProps = {
   isOpen: boolean;
@@ -19,8 +20,10 @@ export const AdvancedSearchModal = ({
   const [title, setTitle] = useState("");
   const [keyword, setKeyword] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchParams] = useSearchParams();
   const modalRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const prevKeywordRef = useRef<string | null>(null);
 
   // 외부 클릭 시 모달 닫기
   useEffect(() => {
@@ -68,6 +71,20 @@ export const AdvancedSearchModal = ({
       { key: "keyword", value: "" },
     ]);
   };
+
+  // 메인 검색 키워드가 변경되면 상세검색 키워드 초기화
+  useEffect(() => {
+    const currentKeyword = searchParams.get("keyword");
+    const prevKeyword = prevKeywordRef.current;
+
+    // 키워드가 변경된 경우에만 초기화
+    if (currentKeyword !== prevKeyword && prevKeyword !== null) {
+      setKeyword("");
+    }
+
+    // 이전 키워드 값 업데이트
+    prevKeywordRef.current = currentKeyword;
+  }, [searchParams]);
 
   if (!isOpen) return null;
 
